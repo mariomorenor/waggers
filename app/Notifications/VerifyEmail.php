@@ -11,9 +11,9 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\URL;
 
-class VerifyEmail extends Notification implements ShouldQueue
+class VerifyEmail extends Notification 
 {
-    use Queueable;
+ 
     /**
      * The callback that should be used to build the mail message.
      *
