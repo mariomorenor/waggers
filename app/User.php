@@ -2,12 +2,15 @@
 
 namespace App;
 
+use App\Mail\ConfirmAccountMail;
+use App\Mail\ResetPasswordMail;
 use App\Notifications\ResetPasswordNotification;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Mail;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -21,7 +24,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','confirmation_code'
+        'name', 'email', 'password','confirmation_code','nickname'
     ];
 
     /**
@@ -44,12 +47,17 @@ class User extends Authenticatable implements MustVerifyEmail
 
 
     public function sendEmailVerificationNotification()
-    {
-        $this->notify(new Notifications\VerifyEmail);
+    {   
+     
+        Mail::to($this)
+            ->send(new ConfirmAccountMail($this->confirmation_code));
+       
     }
 
     public function sendPasswordResetNotification($token)
     {
-        $this->notify(new ResetPasswordNotification($token));
+     
+        Mail::to($this)->send(new ResetPasswordMail($token,$this->email));
+      
     }
 }

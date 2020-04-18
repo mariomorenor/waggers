@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
@@ -55,6 +56,7 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'nickname'=>['required','string','unique:users,nickname']
         ]);
     }
 
@@ -66,16 +68,31 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        // $data['confirmation_code']= Str::random(25);
-        $user = User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
+        $data['confirmation_code']= Str::random(25);
+      return DB::transaction(function() use($data){
+            $user = User::create([
+                'name' => $data['name'],
+                'nickname' => $data['nickname'],
+                'email' => $data['email'],
+                'password' => Hash::make($data['password']),
+                'confirmation_code'=>$data['confirmation_code']
+            ]);
+    
+            DB::table('user_country')->insert([
+                'user_id'=>$user->id,
+                'country_id'=>$data['country']
+            ]);
+
+            return $user;
+        });
         
 
+    }
 
-        return $user;
+    public function showRegistrationForm()
+    {
+        $countries = DB::table('countries')->get();
 
+        return view('auth.register')->with(['countries'=>$countries]);
     }
 }
