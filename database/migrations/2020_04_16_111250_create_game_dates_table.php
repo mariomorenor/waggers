@@ -16,8 +16,13 @@ class CreateGameDatesTable extends Migration
         Schema::create('game_dates', function (Blueprint $table) {
             $table->id();
             $table->date('date');
-            $table->foreignId('waggers_id')->constrained();
-            // $table
+            $table->integer('rounds');
+            $table->string('game_mode');
+            $table->string('map_mode');
+            $table->string('prize');
+            $table->foreignId('referee_user_id')->constrained('users');
+            $table->foreignId('local_user_id')->constrained('users');
+            $table->foreignId('visitor_user_id')->constrained('users');
             $table->timestamps();
         });
     }

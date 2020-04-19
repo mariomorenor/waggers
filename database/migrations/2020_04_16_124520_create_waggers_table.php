@@ -15,12 +15,7 @@ class CreateWaggersTable extends Migration
     {
         Schema::create('waggers', function (Blueprint $table) {
             $table->id();
-            $table->date('date');
-            $table->integer('rounds');
-            $table->string('game_mode');
-            $table->string('map_mode');
-            $table->foreignId('referee_user_id')->constrained('users');
-            $table->string('prize');
+            $table->foreignId('game_dates_id')->constrained('game_dates');
             $table->foreignId('winner_user_id')->constrained('users');
             $table->foreignId('loser_user_id')->constrained('users');
             $table->timestamps();
