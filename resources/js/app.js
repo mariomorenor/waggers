@@ -5,8 +5,10 @@ require('./bootstrap');
 window.Vue = require('vue');
 
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+Vue.component('listplayers-component', require('./components/showPlayersComponent.vue').default);
+Vue.component('showwagger-component', require('./components/showWaggerComponent.vue').default);
 
+Vue.component('InfiniteLoading', require('vue-infinite-loading'));
 
 
 const app = new Vue({

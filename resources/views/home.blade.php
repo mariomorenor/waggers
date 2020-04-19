@@ -5,7 +5,7 @@
     <div class="row mb-3 justify-content-center">
         <div class="col-9 col-sm-5 col-md-7 col-lg-6 mx-auto">
             <div class="shadow">
-                <a href="#" class="btn btn-primary btn-block">
+                <a href="{{ route('list_players') }}" class="btn btn-primary btn-block">
                     {{__('Search waGGer Players')}}
                 </a>
             </div>

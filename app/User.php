@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Mail;
+use App\Wagger;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -56,8 +57,11 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function sendPasswordResetNotification($token)
     {
-     
         Mail::to($this)->send(new ResetPasswordMail($token,$this->email));
-      
+    }
+
+    public function waggers()
+    {
+        return $this->hasMany(Wagger::class,'winner_user_id');
     }
 }

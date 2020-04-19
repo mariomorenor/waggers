@@ -2,11 +2,54 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use App\Wagger;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class WaggerController extends Controller
 {
+        public function __construct( ) {
+            $this->middleware('auth');
+        }
+        public function list_wagger_users(Request $request)
+        {
+            if ($request->ajax()) {
+                $users = User::with('waggers.game_date')->paginate(10);
+          
+                return $users;
+            }
+      
+
+            return view('waggers.show_players');
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +57,7 @@ class WaggerController extends Controller
      */
     public function index()
     {
-        //
+
     }
 
     /**
@@ -82,4 +125,7 @@ class WaggerController extends Controller
     {
         //
     }
+
+
+
 }

@@ -21,6 +21,8 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('confirmation_code')->nullable();
+            $table->integer('wins')->default(0);
+            $table->integer('fails')->default(0);
             $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();
