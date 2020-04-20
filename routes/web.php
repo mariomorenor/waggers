@@ -21,8 +21,9 @@ Auth::routes(['verify'=>true]);
 Route::middleware(['auth','verified'])->group(function(){
     
     Route::get('/home', 'HomeController@index')->name('home');
-    Route::get('/users', 'WaggerController@index')->name('users.index');
     Route::get('/register/verify/{code}', 'GuestController@verify');
     Route::get('find_players','WaggerController@list_wagger_users')->name('list_players');
+    Route::get('list_waggers/{user}','WaggerController@list_waggers');
+    Route::resource('users','UserController');
 
 });

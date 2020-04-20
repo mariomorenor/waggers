@@ -12,6 +12,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Mail;
 use App\Wagger;
+use App\game_date;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -60,8 +61,19 @@ class User extends Authenticatable implements MustVerifyEmail
         Mail::to($this)->send(new ResetPasswordMail($token,$this->email));
     }
 
-    public function waggers()
+    public function waggersWon()
     {
         return $this->hasMany(Wagger::class,'winner_user_id');
     }
+    public function waggersFailed()
+    {
+        return $this->hasMany(Wagger::class,'loser_user_id');
+    }
+
+
+    // public function where_has_been_local_user()
+    // {
+    //     return $this->hasMany(game_date::class,'local_user_id');
+    // }
+
 }

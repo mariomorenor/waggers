@@ -12,18 +12,28 @@ class WaggerController extends Controller
         public function __construct( ) {
             $this->middleware('auth');
         }
+
         public function list_wagger_users(Request $request)
-        {
+        {   
             if ($request->ajax()) {
-                $users = User::with('waggers.game_date')->paginate(10);
-          
+                $users = User::paginate(10);
                 return $users;
             }
-      
-
             return view('waggers.show_players');
         }
 
+        public function list_waggers(User $user, Request $request)
+        {   
+            
+            if ($request->ajax()) {
+                
+                return Wagger::where('winner_user_id',$user->id)
+                                ->orWhere('loser_user_id',$user->id)
+                                ->with(['winner','loser','game_date.local_user','game_date.visitor_user'])
+                                ->orderBy('created_at','desc')
+                                ->paginate(5);
+            }
+        }
 
 
 
@@ -67,7 +77,7 @@ class WaggerController extends Controller
      */
     public function create()
     {
-        //
+        // return view('waggers.create_game_date');
     }
 
     /**
@@ -89,7 +99,7 @@ class WaggerController extends Controller
      */
     public function show(Wagger $wagger)
     {
-        //
+        
     }
 
     /**

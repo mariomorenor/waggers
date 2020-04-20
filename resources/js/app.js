@@ -11,6 +11,7 @@ Vue.component('showwagger-component', require('./components/showWaggerComponent.
 Vue.component('InfiniteLoading', require('vue-infinite-loading'));
 
 
+
 const app = new Vue({
     el: '#app',
 });

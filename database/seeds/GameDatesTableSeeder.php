@@ -15,7 +15,7 @@ class GameDatesTableSeeder extends Seeder
     {
         $game_date = new game_date;
 
-        $game_date->date = Carbon::create(2020,6,1,5,30,0);
+        $game_date->date = Carbon::create(2020,6,1,17,0,0);
         $game_date->rounds = 10;
         $game_date->game_mode = '2v2';
         $game_date->map_mode = 'box figth';

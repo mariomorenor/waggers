@@ -25,7 +25,7 @@
 
             </div>
             <div class="card-footer p-0 ml-auto border-0 mr-2">
-                <a href="">Más Detalles</a>
+                <a :href="'users/'+player.id" >Más Detalles</a>
             </div>
         </div>
         <infinite-loading @infinite="infiniteHandler" spinner="bubbles">
@@ -50,7 +50,6 @@ export default {
             $.get({
                 url: '/find_players?page=' + that.page,
                 success: function (response) {
-                   
                     if (response.data.length) {
                         that.players = that.players.concat(response.data)
                         $state.loaded()

@@ -15,7 +15,7 @@ class CreateGameDatesTable extends Migration
     {
         Schema::create('game_dates', function (Blueprint $table) {
             $table->id();
-            $table->date('date');
+            $table->timestamp('date');
             $table->integer('rounds');
             $table->string('game_mode');
             $table->string('map_mode');
